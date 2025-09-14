@@ -1,0 +1,37 @@
+NAME = rush-01
+
+SRCS = rush-01.c
+OBJS = $(SRCS:.c=.o)
+
+TEST_SRCS = tests/test_cases.c
+MEM_TEST_SRCS = tests/memory_test.c
+MOD_SRCS = tests/lib/input_validation.c tests/lib/solver.c tests/lib/visibility.c tests/lib/output.c
+
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -I. -Itests/lib
+
+all: $(NAME) tests/test_cases memory_test
+
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+
+tests/test_cases: $(TEST_SRCS)
+	$(CC) $(CFLAGS) -o $@ $(TEST_SRCS)
+
+memory_test: $(MEM_TEST_SRCS) $(MOD_SRCS)
+	$(CC) $(CFLAGS) -o $@ $(MEM_TEST_SRCS) $(MOD_SRCS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(NAME) tests/test_cases memory_test
+
+re: fclean all
+
+.PHONY: all clean fclean re
+
+
