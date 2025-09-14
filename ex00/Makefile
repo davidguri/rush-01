@@ -1,6 +1,6 @@
 NAME = rush-01
 
-SRCS = rush-01.c
+SRCS = main.c input_validation.c solver.c visibility.c output.c
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
